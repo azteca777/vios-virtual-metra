@@ -21,7 +21,8 @@ export default async function CiudadPage({ params }: Props) {
     { 
       id: 'tianguis', 
       name: 'Tianguis Tulum', 
-      desc: 'Mercado inmersivo en 3D para comercio digital y experiencias locales.' 
+      desc: 'Mercado inmersivo en 3D para comercio digital y experiencias locales.',
+      url: 'https://tianguistulum.com' // 🔥 Agregamos el dominio externo aquí
     },
     { 
       id: 'nomad', 
@@ -63,28 +64,38 @@ export default async function CiudadPage({ params }: Props) {
       {/* Grid de Satélites */}
       <section className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {satelites.map((satelite) => (
-            <Link 
-              href={`/${resolvedParams.estado}/${resolvedParams.ciudad}/${satelite.id}`} 
-              key={satelite.id}
-              className="group relative block p-8 rounded-2xl bg-[#0a0a0a] border border-zinc-800 transition-all duration-300 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] overflow-hidden"
-            >
-              {/* Efecto de pulso neón interno en hover */}
-              <div className="absolute inset-0 bg-cyan-400/5 opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300 pointer-events-none z-0" />
-              
-              <div className="relative z-10">
-                <h3 className="font-montserrat text-xl font-bold text-zinc-100 mb-3 group-hover:text-cyan-300 transition-colors duration-300">
-                  {satelite.name}
-                </h3>
-                <p className="font-inter text-sm text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors duration-300">
-                  {satelite.desc}
-                </p>
-              </div>
+          {satelites.map((satelite) => {
+            // Lógica para decidir a dónde apunta el enlace
+            const destino = satelite.url ? satelite.url : `/${resolvedParams.estado}/${resolvedParams.ciudad}/${satelite.id}`;
+            const esExterno = !!satelite.url;
 
-              {/* Acento decorativo */}
-              <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-zinc-800 to-transparent opacity-50 rounded-tr-2xl group-hover:from-cyan-900 transition-all duration-300" />
-            </Link>
-          ))}
+            return (
+              <Link 
+                href={destino} 
+                key={satelite.id}
+                // Si es externo, lo abrimos en una nueva pestaña por seguridad y retención
+                {...(esExterno ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                className="group relative block p-8 rounded-2xl bg-[#0a0a0a] border border-zinc-800 transition-all duration-300 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] overflow-hidden"
+              >
+                {/* Efecto de pulso neón interno en hover */}
+                <div className="absolute inset-0 bg-cyan-400/5 opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300 pointer-events-none z-0" />
+                
+                <div className="relative z-10">
+                  <h3 className="font-montserrat text-xl font-bold text-zinc-100 mb-3 group-hover:text-cyan-300 transition-colors duration-300">
+                    {satelite.name}
+                    {/* Pequeño indicador visual opcional si sale de la app */}
+                    {esExterno && <span className="inline-block ml-2 text-xs text-zinc-500 font-inter">↗</span>}
+                  </h3>
+                  <p className="font-inter text-sm text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors duration-300">
+                    {satelite.desc}
+                  </p>
+                </div>
+
+                {/* Acento decorativo */}
+                <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-zinc-800 to-transparent opacity-50 rounded-tr-2xl group-hover:from-cyan-900 transition-all duration-300" />
+              </Link>
+            );
+          })}
         </div>
       </section>
     </main>
