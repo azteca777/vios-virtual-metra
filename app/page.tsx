@@ -4,15 +4,13 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-// Definimos las ciudades de Quintana Roo con sus imágenes
-const ciudadesQuintanaRoo = [
-  { id: 'cancun', name: 'CANCÚN', image: '/cancun.jpeg', disponible: false },
-  { id: 'isla-mujeres', name: 'ISLA MUJERES', image: '/isla_mujeres.jpeg', disponible: false },
-  { id: 'cozumel', name: 'ISLA DE COZUMEL', image: '/cozumel.jpeg', disponible: false },
-  { id: 'tulum', name: 'TULUM', image: '/tulum.jpeg', disponible: true },
-  { id: 'bacalar', name: 'BACALAR', image: '/bacalar.jpeg', disponible: false },
-  // 🔥 NUEVA CIUDAD AÑADIDA 🔥
-  { id: 'chetumal', name: 'CHETUMAL', image: '/chetumal.jpeg', disponible: false },
+// Definimos los Estados de la República Mexicana con tus imágenes específicas
+const estadosVirtuales = [
+  { id: 'quintana-roo', name: 'QUINTANA ROO', image: '/quintana_roo.jpeg', disponible: true },
+  { id: 'morelos', name: 'MORELOS', image: '/morelos.jpeg', disponible: false },
+  { id: 'jalisco', name: 'JALISCO', image: '/jalisco.jpeg', disponible: false },
+  { id: 'yucatan', name: 'YUCATÁN', image: '/yucatan.jpeg', disponible: false },
+  { id: 'michoacan', name: 'MICHOACÁN', image: '/michoacan.jpeg', disponible: false },
 ];
 
 export default function ViosVirtualMetraRoot() {
@@ -58,7 +56,7 @@ export default function ViosVirtualMetraRoot() {
       <section className="pt-36 px-6 max-w-7xl mx-auto flex flex-col items-center justify-center min-h-[40vh] md:min-h-[50vh] mb-24 relative">
         <div className="flex flex-col md:flex-row items-center md:items-center gap-12 lg:gap-20 w-full animate-[fadeIn_1s_ease-in-out]">
           
-         {/* 🏙️ LA CIUDAD 3D INTERACTIVA (Izquierda) */}
+         {/* 🏙️ LA METRÓPOLIS 3D INTERACTIVA */}
           <div className="w-72 h-72 md:w-[450px] md:h-[450px] shrink-0 relative mx-auto md:mx-0 flex justify-center items-center drop-shadow-[0_10px_40px_rgba(34,211,238,0.25)]">
             <iframe 
               title="City 3D Model" 
@@ -68,7 +66,7 @@ export default function ViosVirtualMetraRoot() {
             ></iframe>
           </div>
           
-          {/* 📝 TEXTOS (Derecha) */}
+          {/* 📝 TEXTOS */}
           <div className="flex flex-col gap-4 text-left text-black w-full">
             <h2 className="font-montserrat text-4xl md:text-5xl lg:text-7xl font-black tracking-tight leading-tight">
               {idioma === 'es' ? 'La Metrópolis Virtual' : 'The Virtual Metropolis'} <br />
@@ -79,66 +77,65 @@ export default function ViosVirtualMetraRoot() {
             
             <p className="text-gray-700 text-lg lg:text-xl leading-relaxed max-w-2xl mt-4 font-normal text-left">
               {idioma === 'es' 
-                ? 'ViOs Virtual Metra es el contenedor dinámico de ciudades y proyectos hiperlocales. Adéntrate en entornos específicos, descubre desarrollos inmersivos por región y conecta con la comunidad a un nivel detallado y geolocalizado.'
-                : 'ViOs Virtual Metra is the dynamic container for cities and hyperlocal projects. Dive into specific environments, discover immersive developments by region, and connect with the community at a detailed, geolocated level.'}
+                ? 'ViOs Virtual Metra es el contenedor dinámico del ecosistema digital. Explora los estados de la República Mexicana, descubre sus ciudades interactivas y adéntrate en proyectos hiperlocales desarrollados con tecnología inmersiva.'
+                : 'ViOs Virtual Metra is the dynamic container of the digital ecosystem. Explore the states of the Mexican Republic, discover their interactive cities, and dive into hyperlocal projects developed with immersive technology.'}
             </p>
           </div>
         </div>
       </section>
 
-      {/* 🏙️ SECCIÓN 2: LAS CIUDADES */}
+      {/* 🗺️ SECCIÓN 2: LOS ESTADOS */}
       <section className="px-6 max-w-7xl mx-auto mb-32 flex flex-col items-center">
         <div className="w-full flex flex-col md:flex-row items-start md:items-center justify-between mb-16 gap-4">
           <div>
             <p className="font-inter text-cyan-600 font-bold tracking-[0.2em] text-sm uppercase mb-2">
-              {idioma === 'es' ? 'Explorando: Quintana Roo' : 'Exploring: Quintana Roo'}
+              {idioma === 'es' ? 'Explorando: República Mexicana' : 'Exploring: Mexican Republic'}
             </p>
             <h2 className={`font-montserrat text-3xl md:text-5xl font-black ${!introTerminada ? 'text-white' : 'text-black'} transition-colors duration-1000`}>
-              {idioma === 'es' ? 'Ciudades Interactivas' : 'Interactive Cities'}
+              {idioma === 'es' ? 'Estados Virtuales' : 'Virtual States'}
             </h2>
           </div>
           <div className={`h-px ${!introTerminada ? 'bg-gradient-to-r from-gray-800 to-transparent' : 'bg-gradient-to-r from-gray-300 to-transparent'} flex-grow ml-0 md:ml-8 transition-colors duration-1000 w-full md:w-auto`}></div>
         </div>
 
-        {/* --- MAPA INTERACTIVO DE CIUDADES (Se actualiza automáticamente al añadir datos) --- */}
+        {/* --- MAPA INTERACTIVO DE ESTADOS --- */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
-          {ciudadesQuintanaRoo.map((ciudad) => (
-            <div key={ciudad.id} className="relative group rounded-3xl overflow-hidden aspect-[4/5] border border-neutral-800 shadow-sm">
-              {ciudad.disponible ? (
+          {estadosVirtuales.map((estado) => (
+            <div key={estado.id} className="relative group rounded-3xl overflow-hidden aspect-[4/5] border border-neutral-800 shadow-sm">
+              {estado.disponible ? (
+                // Enrutamiento directo al estado: ej. /quintana-roo
                 <Link 
-                  href={`/quintana-roo/${ciudad.id}`} 
+                  href={`/${estado.id}`} 
                   className="w-full h-full block relative cursor-pointer group-hover:border-cyan-400 transition-all duration-300"
-                  aria-label={idioma === 'es' ? `Entrar al mapa virtual de ${ciudad.name}` : `Enter the virtual map of ${ciudad.name}`}
+                  aria-label={idioma === 'es' ? `Entrar al estado virtual de ${estado.name}` : `Enter the virtual state of ${estado.name}`}
                 >
                   <Image 
-                    src={ciudad.image} 
-                    alt={`Vista de ${ciudad.name}, Quintana Roo.`} 
+                    src={estado.image} 
+                    alt={`Vista de ${estado.name}`} 
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover z-0 group-hover:scale-105 transition-all duration-700"
-                    priority={ciudad.id === 'tulum'} 
+                    priority={estado.id === 'quintana-roo'} 
                   />
 
                   <div className="absolute inset-0 w-full h-full bg-cyan-400/0 border-4 border-transparent group-hover:border-cyan-400 opacity-0 group-hover:opacity-100 group-hover:bg-cyan-400/10 group-hover:shadow-[inset_0_0_30px_rgba(34,211,238,0.3)] transition-all duration-300 z-10" />
                   
                   <div className="absolute bottom-6 left-6 right-6 bg-black/80 backdrop-blur-md p-5 rounded-2xl border border-neutral-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 text-center">
                     <h3 className="font-montserrat text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 uppercase tracking-tight">
-                      {ciudad.name}
+                      {estado.name}
                     </h3>
                     <div className="mt-3 flex items-center justify-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
-                      <p className="text-cyan-400 text-xs font-mono tracking-wider">
-                        {idioma === 'es' ? 'ENTRAR AL PORTAL' : 'ENTER PORTAL'}
-                      </p>
+                      <p className="text-cyan-400 text-xs font-mono tracking-wider">{idioma === 'es' ? 'EXPLORAR ESTADO' : 'EXPLORE STATE'}</p>
                     </div>
                   </div>
                 </Link>
               ) : (
-                /* ESTRUCTURA IDÉNTICA A TULUM, PERO CON CAPA OSCURA Z-10 PARA "EN DESARROLLO" */
+                /* TARJETAS DE ESTADOS EN DESARROLLO (Con imágenes reales pero oscurecidas) */
                 <div className="w-full h-full block relative">
                   <Image 
-                    src={ciudad.image} 
-                    alt={`Vista de ${ciudad.name}, Quintana Roo. En Desarrollo.`} 
+                    src={estado.image} 
+                    alt={`Vista de ${estado.name}. En Desarrollo.`} 
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover z-0 transition-transform duration-700 group-hover:scale-105"
@@ -147,10 +144,9 @@ export default function ViosVirtualMetraRoot() {
                   {/* Capa negra semitransparente */}
                   <div className="absolute inset-0 w-full h-full bg-black/60 group-hover:bg-black/40 transition-colors duration-500 z-10" />
 
-                  {/* Textos y Badges en primer plano */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center z-20 pointer-events-none p-6 text-center">
                     <h3 className="font-montserrat text-2xl font-black text-white uppercase tracking-tight mb-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                      {ciudad.name}
+                      {estado.name}
                     </h3>
                     <p className="text-gray-100 text-xs font-bold mt-2 tracking-widest uppercase border border-gray-400/60 px-4 py-2 rounded-full bg-black/70 shadow-xl backdrop-blur-sm">
                       {idioma === 'es' ? 'En Desarrollo' : 'In Development'}
@@ -161,12 +157,12 @@ export default function ViosVirtualMetraRoot() {
             </div>
           ))}
         </div>
-        {/* --- FIN MAPA INTERACTIVO DE CIUDADES --- */}
+        {/* --- FIN MAPA INTERACTIVO DE ESTADOS --- */}
 
         <div className="mt-20 flex items-center space-x-3">
           <div className="h-3 w-3 rounded-full bg-cyan-400 animate-ping"></div>
           <h2 className="text-xl md:text-2xl font-mono text-cyan-400 tracking-widest animate-pulse drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
-            {idioma === 'es' ? 'SISTEMA DE CIUDADES ACTIVO...' : 'CITY SYSTEM ACTIVE...'}
+            {idioma === 'es' ? 'SISTEMA DE ESTADOS ACTIVO...' : 'STATE SYSTEM ACTIVE...'}
           </h2>
         </div>
       </section>
@@ -191,12 +187,12 @@ export default function ViosVirtualMetraRoot() {
             <p className="text-gray-600 text-sm">{idioma === 'es' ? 'El portal principal de conexión.' : 'The main connection portal.'}</p>
           </Link>
 
-          <Link href="https://virtualuniverse.com" target="_blank" rel="noopener noreferrer" className="bg-white border border-gray-100 p-8 rounded-3xl hover:border-gray-200 hover:shadow-lg transition-all relative overflow-hidden group shadow-sm block cursor-pointer">
+          <div className="bg-white border border-gray-100 p-8 rounded-3xl hover:border-gray-200 hover:shadow-lg transition-all relative overflow-hidden group shadow-sm">
             <div className="absolute top-0 right-0 w-32 h-32 bg-gray-100 rounded-full blur-3xl group-hover:bg-gray-200 transition-all"></div>
             <div className="text-5xl mb-6">🌌</div>
             <h3 className="font-montserrat text-2xl font-bold text-black mb-2">Virtual Universe</h3>
             <p className="text-gray-600 text-sm">{idioma === 'es' ? 'La red maestra global.' : 'The global master network.'}</p>
-          </Link>
+          </div>
 
           <Link href="https://viosvirtualplanet.com" target="_blank" rel="noopener noreferrer" className="bg-white border border-gray-100 p-8 rounded-3xl hover:border-gray-200 hover:shadow-lg transition-all relative overflow-hidden group shadow-sm block cursor-pointer">
             <div className="absolute top-0 right-0 w-32 h-32 bg-gray-100 rounded-full blur-3xl group-hover:bg-gray-200 transition-all"></div>
@@ -214,7 +210,6 @@ export default function ViosVirtualMetraRoot() {
             </p>
           </div>
 
-          {/* 🔥 CORRECCIÓN APLICADA AQUÍ: Se cierra con </div> 🔥 */}
           <div className="bg-white border border-gray-100 p-8 rounded-3xl hover:border-gray-200 hover:shadow-lg transition-all relative overflow-hidden group shadow-sm">
             <div className="absolute top-0 right-0 w-32 h-32 bg-gray-100 rounded-full blur-3xl group-hover:bg-gray-200 transition-all"></div>
             <div className="text-5xl mb-6">🤝</div>

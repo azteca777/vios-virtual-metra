@@ -47,11 +47,23 @@ export default async function CiudadPage({ params }: Props) {
   ];
 
   return (
-    <main className="min-h-screen bg-black text-white px-6 py-24 selection:bg-cyan-900">
+    <main className="min-h-screen bg-black text-white px-6 py-16 selection:bg-cyan-900">
+      
+      {/* 🔥 BOTÓN DE NAVEGACIÓN (VOLVER AL ESTADO) 🔥 */}
+      <div className="max-w-6xl mx-auto mb-12">
+        <Link 
+          href={`/${resolvedParams.estado}`}
+          className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:text-cyan-400 hover:border-cyan-400/50 hover:bg-cyan-400/10 hover:shadow-[0_0_15px_rgba(34,211,238,0.2)] transition-all duration-300 font-inter text-sm backdrop-blur-sm group"
+        >
+          <span className="text-lg group-hover:-translate-x-1 transition-transform duration-300">←</span> 
+          <span className="tracking-wide">Elija otra ciudad de <span className="capitalize text-zinc-300 group-hover:text-cyan-300 font-semibold">{estadoName}</span></span>
+        </Link>
+      </div>
+
       {/* Encabezado Cinematográfico */}
       <header className="max-w-6xl mx-auto mb-20 text-center">
         <p className="font-inter text-zinc-400 text-sm tracking-[0.3em] uppercase mb-4">
-          Virtual Metra / {estadoName}
+          Virtual Metra / <span className="capitalize">{estadoName}</span>
         </p>
         <h1 className="font-montserrat text-5xl md:text-7xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-yellow-200 via-yellow-500 to-yellow-700 drop-shadow-[0_0_15px_rgba(234,179,8,0.2)]">
           {ciudadName}
