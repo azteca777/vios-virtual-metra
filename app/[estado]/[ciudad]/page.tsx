@@ -162,7 +162,7 @@ export default function CiudadPage({ params }: Props) {
             </Link>
           </div>
 
-          {/* Textos Centrados */}
+          {/* Textos Centrados Limpios (Sin la descripción) */}
           <div className="w-full flex flex-col items-center justify-center mt-2 md:mt-0">
             <p className="font-inter text-cyan-400/90 text-[10px] md:text-sm tracking-[0.3em] md:tracking-[0.4em] uppercase mb-1 md:mb-2 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
               Virtual Metra / <span className="capitalize text-zinc-500">{estadoName}</span>
@@ -170,9 +170,6 @@ export default function CiudadPage({ params }: Props) {
             <h1 className="font-montserrat text-4xl md:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-yellow-100 via-yellow-400 to-yellow-600 drop-shadow-[0_0_25px_rgba(234,179,8,0.4)] mb-1 md:mb-2">
               {ciudadName}
             </h1>
-            <p className="font-inter text-zinc-400 max-w-xs md:max-w-xl mx-auto text-[10px] md:text-sm px-4 text-center">
-              Navega por la matriz dimensional y selecciona tu destino.
-            </p>
           </div>
         </header>
 
