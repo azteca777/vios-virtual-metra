@@ -134,7 +134,7 @@ return (
 <div className="absolute inset-0 z-0 bg-white"> 
 <Canvas camera={{ position: posicionCamara as [number, number, number], fov: 60 }}> 
 {/* INVERTIDO: Estrellas de color oscuro para que se vean en fondo blanco */}
-<Stars radius={100} depth={50} count={6000} factor={4} saturation={0} fade speed={0.5} color="#333333" /> 
+<Stars radius={100} depth={50} count={6000} factor={4} saturation={0} fade speed={0.5} /> 
 <OrbitControls 
 enableZoom={true} 
 maxDistance={35} 
