@@ -148,7 +148,7 @@ export default function AldeaZamaPage({ params }: Props) {
       {/* 🌌 EL CANVAS 3D */}
       <div className="absolute inset-0 z-0 bg-white">
         <Canvas camera={{ position: [0, 4, 10], fov: 50 }}>
-          <Stars radius={100} depth={50} count={6000} factor={4} saturation={0} fade speed={0.5} color="#333333" />
+          <Stars radius={100} depth={50} count={6000} factor={4} saturation={0} fade speed={0.5} />
           
           <OrbitControls 
             enableZoom={true} 
