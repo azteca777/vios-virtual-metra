@@ -11,7 +11,7 @@ const HtmlSafe = Html as unknown as React.FC<any>;
 const SplatSafe = Splat as unknown as React.FC<any>;
 
 // 👇👇👇 EL SPLAT EN PANTALLA COMPLETA 👇👇👇
-const URL_SPLAT_FULL = "https://izuozfbhtyvjwrckummr.supabase.co/storage/v1/object/public/modelos-3d/zama_pruba.splat";
+const URL_SPLAT_FULL = "https://izuozfbhtyvjwrckummr.supabase.co/storage/v1/object/public/modelos-3d/aldea_zama_V2.0.splat";
 
 // === 📖 EL DICCIONARIO BILINGÜE 📖 ===
 const TEXTOS = {
@@ -20,9 +20,10 @@ const TEXTOS = {
     sector: "ZONA COMERCIAL Y RESIDENCIAL",
     instrucciones: "🖱️ Arrastra para girar • 📜 Usa el scroll para hacer zoom",
     cargando: "Renderizando Aldea Zama...",
-    btnIdioma: "EN", // Muestra la opción contraria
+    btnIdioma: "EN",
     bandera: "🇺🇸",
     alertaMenu: "Abriendo menú de la categoría:",
+    saltarIntro: "Saltar Intro ⏭️",
     pines: {
       restaurantes: "Restaurantes y Bares",
       boutiques: "Boutiques Ropa y Accesorios",
@@ -38,6 +39,7 @@ const TEXTOS = {
     btnIdioma: "ES",
     bandera: "🇲🇽",
     alertaMenu: "Opening menu for category:",
+    saltarIntro: "Skip Intro ⏭️",
     pines: {
       restaurantes: "Restaurants & Bars",
       boutiques: "Clothing & Accessory Boutiques",
@@ -47,8 +49,8 @@ const TEXTOS = {
   }
 };
 
-// === COMPONENTE: PINES CATEGORIZADOS ===
-function PinMetaverso({ posicion, titulo, icono, delay = 0, mensajeAlerta }: { posicion: number[], titulo: string, icono: string, delay?: number, mensajeAlerta: string }) {
+// === COMPONENTE: PINES CATEGORIZADOS (Actualizado con 'accion') ===
+function PinMetaverso({ posicion, titulo, icono, delay = 0, mensajeAlerta, accion }: { posicion: number[], titulo: string, icono: string, delay?: number, mensajeAlerta: string, accion?: () => void }) {
   const [brotar, setBrotar] = useState(false);
 
   useEffect(() => {
@@ -64,7 +66,11 @@ function PinMetaverso({ posicion, titulo, icono, delay = 0, mensajeAlerta }: { p
         }`}
         onClick={(e) => {
             e.stopPropagation();
-            alert(`${mensajeAlerta} ${titulo} 🚀`);
+            if (accion) {
+              accion(); // Ejecuta el salto al nuevo dominio si existe
+            } else {
+              alert(`${mensajeAlerta} ${titulo} 🚀`); // Alerta por defecto
+            }
         }}
       >
         <div className="w-10 h-10 md:w-12 md:h-12 bg-white/95 backdrop-blur-md rounded-full shadow-xl flex items-center justify-center text-xl md:text-2xl border-2 border-cyan-500 text-cyan-700 hover:bg-cyan-50 hover:border-cyan-400 transition-colors">
@@ -78,12 +84,11 @@ function PinMetaverso({ posicion, titulo, icono, delay = 0, mensajeAlerta }: { p
   );
 }
 
-// === COMPONENTE: ESCENA 3D (RECIBE EL IDIOMA) ===
+// === COMPONENTE: ESCENA 3D ===
 function EscenaAldeaZama({ lang }: { lang: 'es' | 'en' }) {
   const mapaRef = useRef<any>(null);
-  const t = TEXTOS[lang]; // Tomamos los textos del idioma actual
+  const t = TEXTOS[lang];
 
-  // Giro súper suave
   useFrame((state, delta) => {
     if (mapaRef.current) {
       mapaRef.current.rotation.y += delta * 0.05; 
@@ -91,39 +96,26 @@ function EscenaAldeaZama({ lang }: { lang: 'es' | 'en' }) {
   });
 
   return (
-    <group ref={mapaRef} position={[0, -1, 0]}>
-      {/* Tu archivo Splat de Aldea Zama */}
-      <SplatSafe src={URL_SPLAT_FULL} scale={1.5} />
+    <group ref={mapaRef} position={[0, 1, 0]}>
+      <SplatSafe src={URL_SPLAT_FULL} scale={13} />
 
-      {/* TUS 4 NUEVAS CATEGORÍAS (Las posiciones X,Y,Z las tienes que ajustar después a ojo) */}
+      {/* 👇👇👇 PIN ACTUALIZADO CON REDIRECCIÓN 👇👇👇 */}
       <PinMetaverso 
         titulo={t.pines.restaurantes} 
         icono="🍷" 
-        posicion={[1.5, 0.5, 2]} 
+        posicion={[1.5, -3, 2]} 
         delay={500} 
-        mensajeAlerta={t.alertaMenu}
+        mensajeAlerta={t.alertaMenu} 
+        accion={() => {
+          // El salto hiperespacial al Metaverso de Lujo
+          window.location.href = "https://virtualuxurytulum.com"; 
+        }}
       />
-      <PinMetaverso 
-        titulo={t.pines.boutiques} 
-        icono="🛍️" 
-        posicion={[-2, 0.5, 1]} 
-        delay={900} 
-        mensajeAlerta={t.alertaMenu}
-      />
-      <PinMetaverso 
-        titulo={t.pines.rentas} 
-        icono="🏡" 
-        posicion={[0, 0.5, -2]} 
-        delay={1300} 
-        mensajeAlerta={t.alertaMenu}
-      />
-      <PinMetaverso 
-        titulo={t.pines.servicios} 
-        icono="🛎️" 
-        posicion={[2, 0.5, -1.5]} 
-        delay={1700} 
-        mensajeAlerta={t.alertaMenu}
-      />
+      {/* 👆👆👆 FIN PIN ACTUALIZADO 👆👆👆 */}
+
+      <PinMetaverso titulo={t.pines.boutiques} icono="🛍️" posicion={[-2, -1.6, -5]} delay={900} mensajeAlerta={t.alertaMenu} />
+      <PinMetaverso titulo={t.pines.rentas} icono="🏡" posicion={[0, 0, -2]} delay={1300} mensajeAlerta={t.alertaMenu} />
+      <PinMetaverso titulo={t.pines.servicios} icono="🛎️" posicion={[2, 0, 5]} delay={1700} mensajeAlerta={t.alertaMenu} />
     </group>
   );
 }
@@ -138,27 +130,55 @@ export default function AldeaZamaPage({ params }: Props) {
   const estadoName = decodeURIComponent(resolvedParams.estado).replace(/-/g, ' '); 
   const ciudadName = decodeURIComponent(resolvedParams.ciudad).replace(/-/g, ' ').toUpperCase(); 
 
-  // ESTADO QUE CONTROLA EL IDIOMA DE TODA LA PÁGINA ('es' por defecto)
   const [idioma, setIdioma] = useState<'es' | 'en'>('es');
   const t = TEXTOS[idioma];
+
+  // 👇👇 ESTADOS PARA CONTROLAR LA INTRO DEL VIDEO 👇👇
+  const [mostrarIntro, setMostrarIntro] = useState(true);
+  const [desvanecerVideo, setDesvanecerVideo] = useState(false);
+
+  // Función que se ejecuta cuando el video termina o cuando le dan a "Saltar Intro"
+  const finalizarIntro = () => {
+    setDesvanecerVideo(true); // Inicia la transición de CSS para hacerlo transparente
+    setTimeout(() => {
+      setMostrarIntro(false); // Quita el video del código después de 1 segundo (lo que dura el fade)
+    }, 1000);
+  };
 
   return (
     <main className="relative w-full h-[100dvh] bg-[#f8fafc] overflow-hidden selection:bg-cyan-200">
       
-      {/* 🌌 EL CANVAS 3D */}
+      {/* 🎬🎬🎬 CAPA DE VIDEO CINEMATOGRÁFICO (Z-INDEX 50) 🎬🎬🎬 */}
+      {mostrarIntro && (
+        <div className={`absolute inset-0 z-50 bg-black flex items-center justify-center transition-opacity duration-1000 ease-in-out ${desvanecerVideo ? 'opacity-0' : 'opacity-100'}`}>
+          <video 
+            src="/zama_video_trans.mp4" 
+            autoPlay 
+            playsInline
+            muted // Muted es necesario para que Chrome/Safari permitan el autoplay
+            className="w-full h-full object-cover"
+            onEnded={finalizarIntro} // Cuando el video de 10 seg acaba, llama a la función
+          />
+          
+          {/* Botón para los desesperados */}
+          <button 
+            onClick={finalizarIntro}
+            className="absolute bottom-10 right-10 bg-black/50 hover:bg-black/80 text-white border border-white/30 backdrop-blur-md px-6 py-2 rounded-full transition-all duration-300 tracking-widest text-xs uppercase font-bold z-50"
+          >
+            {t.saltarIntro}
+          </button>
+        </div>
+      )}
+      {/* 🎬🎬🎬 FIN CAPA DE VIDEO 🎬🎬🎬 */}
+
+      {/* 🌌 EL CANVAS 3D (Cargando escondido de fondo) */}
       <div className="absolute inset-0 z-0 bg-white">
         <Canvas camera={{ position: [0, 4, 10], fov: 50 }}>
           <Stars radius={100} depth={50} count={6000} factor={4} saturation={0} fade speed={0.5} />
           
-          <OrbitControls 
-            enableZoom={true} 
-            maxDistance={25} 
-            minDistance={2} 
-            maxPolarAngle={Math.PI / 2 - 0.05} 
-          />
+          <OrbitControls enableZoom={true} maxDistance={25} minDistance={2} maxPolarAngle={Math.PI / 2 - 0.05} />
 
           <Suspense fallback={<Html center><div className="text-cyan-600 font-bold text-sm md:text-xl tracking-widest animate-pulse bg-white/80 px-6 py-3 rounded-full backdrop-blur-sm border border-cyan-500/30 shadow-lg">{t.cargando}</div></Html>}>
-            {/* Le pasamos el idioma a la escena 3D para que actualice los pines */}
             <EscenaAldeaZama lang={idioma} />
           </Suspense>
         </Canvas>
@@ -168,7 +188,6 @@ export default function AldeaZamaPage({ params }: Props) {
       <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-between">
         <header className="w-full pointer-events-auto p-4 md:p-8 flex justify-between items-start">
           
-          {/* Botón Volver Dinámico */}
           <Link 
             href={`/${resolvedParams.estado}/${resolvedParams.ciudad}`} 
             className="flex items-center justify-center w-10 h-10 md:w-auto md:h-auto md:px-5 md:py-2.5 rounded-full border border-gray-300 bg-white/90 text-gray-600 hover:text-cyan-600 hover:border-cyan-400/50 hover:bg-cyan-50/80 transition-all duration-300 font-inter text-sm backdrop-blur-md group shadow-md"
@@ -177,9 +196,7 @@ export default function AldeaZamaPage({ params }: Props) {
             <span className="tracking-wide hidden md:block md:ml-3">{t.volver} <span className="capitalize text-gray-900 font-semibold">{ciudadName}</span></span>
           </Link>
 
-          {/* Panel Superior Derecho (Título + Switch Idioma) */}
           <div className="flex flex-col items-end gap-4">
-            {/* BOTÓN DE CAMBIO DE IDIOMA */}
             <button 
               onClick={() => setIdioma(idioma === 'es' ? 'en' : 'es')}
               className="flex items-center gap-2 bg-white/90 backdrop-blur-md border border-gray-300 px-4 py-2 rounded-full shadow-md text-sm font-bold text-gray-700 hover:bg-cyan-50 hover:text-cyan-600 transition-colors"
@@ -187,7 +204,6 @@ export default function AldeaZamaPage({ params }: Props) {
               <span className="text-lg">{t.bandera}</span> {t.btnIdioma}
             </button>
 
-            {/* Título */}
             <div className="text-right">
               <h1 className="font-montserrat text-3xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-yellow-500 via-yellow-600 to-yellow-800 drop-shadow-sm">
                 ALDEA ZAMA
@@ -199,7 +215,6 @@ export default function AldeaZamaPage({ params }: Props) {
           </div>
         </header>
         
-        {/* Panel inferior dinámico */}
         <div className="w-full p-6 flex justify-center pb-10">
           <div className="bg-white/80 backdrop-blur-md border border-gray-200 px-6 py-2 rounded-full shadow-lg pointer-events-auto">
             <p className="text-gray-600 text-xs md:text-sm font-medium">
