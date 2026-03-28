@@ -99,7 +99,7 @@ function EscenaAldeaZama({ lang }: { lang: 'es' | 'en' }) {
     <group ref={mapaRef} position={[0, 1, 0]}>
       <SplatSafe src={URL_SPLAT_FULL} scale={13} />
 
-      {/* 👇👇👇 PIN ACTUALIZADO CON REDIRECCIÓN 👇👇👇 */}
+      {/* 👇👇👇 PIN DE RESTAURANTES INTACTO 👇👇👇 */}
       <PinMetaverso 
         titulo={t.pines.restaurantes} 
         icono="🍷" 
@@ -107,13 +107,25 @@ function EscenaAldeaZama({ lang }: { lang: 'es' | 'en' }) {
         delay={500} 
         mensajeAlerta={t.alertaMenu} 
         accion={() => {
-          // El salto hiperespacial al Metaverso de Lujo
+          // El salto hiperespacial a la calle de Restaurantes
           window.location.href = "https://virtualuxurytulum.com"; 
         }}
       />
-      {/* 👆👆👆 FIN PIN ACTUALIZADO 👆👆👆 */}
 
-      <PinMetaverso titulo={t.pines.boutiques} icono="🛍️" posicion={[-2, -1.6, -5]} delay={900} mensajeAlerta={t.alertaMenu} />
+      {/* 👇👇👇 PIN DE BOUTIQUES CON NUEVA REDIRECCIÓN 👇👇👇 */}
+      <PinMetaverso 
+        titulo={t.pines.boutiques} 
+        icono="🛍️" 
+        posicion={[-2, -1.6, -5]} 
+        delay={900} 
+        mensajeAlerta={t.alertaMenu}
+        accion={() => {
+          // El salto hiperespacial al Distrito de Moda (Boutiques)
+          window.location.href = "https://virtualuxurytulum.com/boutiques"; 
+        }} 
+      />
+
+      {/* PINES RESTANTES NORMALES */}
       <PinMetaverso titulo={t.pines.rentas} icono="🏡" posicion={[0, 0, -2]} delay={1300} mensajeAlerta={t.alertaMenu} />
       <PinMetaverso titulo={t.pines.servicios} icono="🛎️" posicion={[2, 0, 5]} delay={1700} mensajeAlerta={t.alertaMenu} />
     </group>
