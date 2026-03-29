@@ -124,12 +124,12 @@ function EscenaAldeaZama({ lang }: { lang: 'es' | 'en' }) {
       {/* 👇👇👇 NUEVO PIN DE MERCADO (Tianguis Tulum) 👇👇👇 */}
       <PinMetaverso 
         titulo={t.pines.mercado} 
-        icono="🍎" 
+        icono="🤝🛒" // Combinación de trato cerrado y carrito
         posicion={[-4, -2, 2]} 
         delay={1100} 
         mensajeAlerta={t.alertaMenu}
         accion={() => {
-          // Salto al nodo de las fruterías
+          // El salto al nodo de las fruterías
           window.location.href = "https://tianguistulum.com"; 
         }} 
       />
